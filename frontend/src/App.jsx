@@ -1,10 +1,10 @@
 import DashboardLayout from "./layouts/DashboardLayout";
-import UserDashboard from "./pages/dashboard/UserDashboard";
+import CreateDraft from "./pages/draft/CreateDraft";
 
 function App() {
   return (
     <DashboardLayout>
-      <UserDashboard />
+      <CreateDraft />
     </DashboardLayout>
   );
 }
