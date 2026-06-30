@@ -1,13 +1,23 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
+from app.models.ai_generation_log import AIGenerationLog
 from app.models.draft import Draft
+from app.models.draft_version import DraftVersion
+
+from app.repositories.ai_log_repository import AIGenerationLogRepository
 from app.repositories.draft_repository import DraftRepository
+from app.repositories.draft_version_repository import DraftVersionRepository
+
 from app.schemas.draft import (
     DraftCreateRequest,
     DraftUpdateRequest,
 )
+
+from app.services.ai_service import ai_service
 from app.utils.constants import DRAFT
+from app.utils.prompt_builder import PromptBuilder
+
 
 class DraftService:
 
@@ -30,8 +40,7 @@ class DraftService:
             db,
             draft,
         )
-    
-    
+
     @staticmethod
     def get_all_drafts(
         db: Session,
@@ -41,8 +50,7 @@ class DraftService:
             db,
             user_id,
         )
-    
-    
+
     @staticmethod
     def get_draft(
         db: Session,
@@ -67,7 +75,6 @@ class DraftService:
             )
 
         return draft
-    
 
     @staticmethod
     def update_draft(
@@ -97,7 +104,6 @@ class DraftService:
             db,
             draft,
         )
-    
 
     @staticmethod
     def delete_draft(
@@ -119,3 +125,201 @@ class DraftService:
         return {
             "message": "Draft deleted successfully"
         }
+
+    @staticmethod
+    def _process_ai_action(
+        db: Session,
+        draft: Draft,
+        prompt: str,
+    ):
+        response = ai_service.generate(prompt)
+
+        draft.subject = response["subject"]
+        draft.body = response["body"]
+
+        DraftRepository.save(
+            db,
+            draft,
+        )
+
+        latest_version = DraftVersionRepository.get_latest_version(
+            db,
+            draft.id,
+        )
+
+        version_no = (
+            1
+            if latest_version is None
+            else latest_version.version_no + 1
+        )
+
+        version = DraftVersion(
+            draft_id=draft.id,
+            version_no=version_no,
+            subject=draft.subject,
+            tone=draft.tone,
+            body=draft.body,
+        )
+
+        DraftVersionRepository.create(
+            db,
+            version,
+        )
+
+        log = AIGenerationLog(
+            user_id=draft.user_id,
+            draft_id=draft.id,
+            input_text=prompt,
+            output_text=draft.body,
+            model_name="gemini-2.5-flash",
+        )
+
+        AIGenerationLogRepository.create(
+            db,
+            log,
+        )
+
+        return draft
+
+    @staticmethod
+    def generate_ai_draft(
+        db: Session,
+        draft_id: int,
+        user_id: int,
+    ):
+        draft = DraftService.get_draft(
+            db,
+            draft_id,
+            user_id,
+        )
+
+        prompt = PromptBuilder.build_generate_prompt(
+            draft.message_type,
+            draft.tone,
+            draft.rough_points,
+        )
+
+        return DraftService._process_ai_action(
+            db,
+            draft,
+            prompt,
+        )
+
+    @staticmethod
+    def rewrite_draft(
+        db: Session,
+        draft_id: int,
+        user_id: int,
+    ):
+        draft = DraftService.get_draft(
+            db,
+            draft_id,
+            user_id,
+        )
+
+        prompt = PromptBuilder.build_rewrite_prompt(
+            draft.subject,
+            draft.body,
+        )
+
+        return DraftService._process_ai_action(
+            db,
+            draft,
+            prompt,
+        )
+
+    @staticmethod
+    def improve_draft(
+        db: Session,
+        draft_id: int,
+        user_id: int,
+    ):
+        draft = DraftService.get_draft(
+            db,
+            draft_id,
+            user_id,
+        )
+
+        prompt = PromptBuilder.build_improve_prompt(
+            draft.subject,
+            draft.body,
+        )
+
+        return DraftService._process_ai_action(
+            db,
+            draft,
+            prompt,
+        )
+
+    @staticmethod
+    def shorten_draft(
+        db: Session,
+        draft_id: int,
+        user_id: int,
+    ):
+        draft = DraftService.get_draft(
+            db,
+            draft_id,
+            user_id,
+        )
+
+        prompt = PromptBuilder.build_shorten_prompt(
+            draft.subject,
+            draft.body,
+        )
+
+        return DraftService._process_ai_action(
+            db,
+            draft,
+            prompt,
+        )
+
+    @staticmethod
+    def expand_draft(
+        db: Session,
+        draft_id: int,
+        user_id: int,
+    ):
+        draft = DraftService.get_draft(
+            db,
+            draft_id,
+            user_id,
+        )
+
+        prompt = PromptBuilder.build_expand_prompt(
+            draft.subject,
+            draft.body,
+        )
+
+        return DraftService._process_ai_action(
+            db,
+            draft,
+            prompt,
+        )
+
+    @staticmethod
+    def change_tone(
+        db: Session,
+        draft_id: int,
+        user_id: int,
+        tone: str,
+    ):
+        draft = DraftService.get_draft(
+            db,
+            draft_id,
+            user_id,
+        )
+
+        draft.tone = tone
+
+        prompt = PromptBuilder.build_tone_prompt(
+            draft.subject,
+            draft.body,
+            tone,
+        )
+
+        return DraftService._process_ai_action(
+            db,
+            draft,
+            prompt,
+        )

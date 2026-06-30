@@ -54,3 +54,12 @@ class DraftRepository:
     ):
         db.delete(draft)
         db.commit()
+
+    @staticmethod
+    def save(
+        db: Session,
+        draft: Draft,
+    ):
+        db.commit()
+        db.refresh(draft)
+        return draft
