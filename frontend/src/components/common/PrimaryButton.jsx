@@ -1,7 +1,8 @@
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 
 const PrimaryButton = ({
   children,
+  loading = false,
   onClick,
   type = "button",
   fullWidth = false,
@@ -12,7 +13,7 @@ const PrimaryButton = ({
       variant="contained"
       type={type}
       fullWidth={fullWidth}
-      disabled={disabled}
+      disabled={disabled || loading}
       onClick={onClick}
       sx={{
         borderRadius: 2,
@@ -21,7 +22,14 @@ const PrimaryButton = ({
         fontWeight: 600,
       }}
     >
-      {children}
+      {loading ? (
+        <CircularProgress
+          size={20}
+          color="inherit"
+        />
+      ) : (
+        children
+      )}
     </Button>
   );
 };

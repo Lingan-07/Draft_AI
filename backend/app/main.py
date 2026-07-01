@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from sqlalchemy import text
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import engine
 from app.routers.auth import router as auth_router
@@ -10,6 +11,16 @@ from app.exceptions.handlers import register_exception_handlers
 
 app = FastAPI(
     title="AI Email & Message Draft Assistant"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 register_exception_handlers(app)
