@@ -63,3 +63,18 @@ class DraftRepository:
         db.commit()
         db.refresh(draft)
         return draft
+    
+    @staticmethod
+    def get_by_id_and_user(
+        db: Session,
+        draft_id: int,
+        user_id: int,
+    ):
+        return (
+            db.query(Draft)
+            .filter(
+                Draft.id == draft_id,
+                Draft.user_id == user_id,
+            )
+            .first()
+        )

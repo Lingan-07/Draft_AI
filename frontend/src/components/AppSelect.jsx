@@ -1,24 +1,36 @@
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
-  Select,
   MenuItem,
+  Select,
 } from "@mui/material";
 
 const AppSelect = ({
   label,
   value,
   onChange,
+  name,
+  inputRef,
+  error = false,
+  helperText = "",
   options = [],
 }) => {
   return (
-    <FormControl fullWidth margin="normal" size="small">
+    <FormControl
+      fullWidth
+      margin="normal"
+      size="small"
+      error={error}
+    >
       <InputLabel>{label}</InputLabel>
 
       <Select
         label={label}
+        name={name}
         value={value}
         onChange={onChange}
+        inputRef={inputRef}
       >
         {options.map((item) => (
           <MenuItem
@@ -29,6 +41,10 @@ const AppSelect = ({
           </MenuItem>
         ))}
       </Select>
+
+      <FormHelperText>
+        {helperText}
+      </FormHelperText>
     </FormControl>
   );
 };

@@ -1,7 +1,7 @@
 import { Box, Toolbar } from "@mui/material";
 
-import Sidebar from "../components/dashboard/Sidebar";
-import Header from "../components/dashboard/Header";
+import Sidebar from "../pages/dashboard/components/Sidebar";
+import Header from "../pages/dashboard/components/Header";
 
 const DashboardLayout = ({ children }) => {
   return (
@@ -14,7 +14,8 @@ const DashboardLayout = ({ children }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          bgcolor: "#F5F7FB",
+          bgcolor: "background.default",
+          color: "text.primary",
           minHeight: "100vh",
           px: 5,
           py: 4,

@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import AppTextField from "../common/AppTextField";
-import PrimaryButton from "../common/PrimaryButton";
+import AppTextField from "../../../components/AppTextField";
+import PrimaryButton from "../../../components/PrimaryButton";
 
-import { registerUser } from "../../api/authApi";
+import { registerUser } from "../../../api/authApi";
 
 export default function RegisterForm() {
   const navigate = useNavigate();

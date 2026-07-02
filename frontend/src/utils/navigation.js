@@ -1,8 +1,8 @@
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
-import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
-import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
+import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import AdminPanelSettingsRoundedIcon from "@mui/icons-material/AdminPanelSettingsRounded";
 
 export const userMenu = [
   {
@@ -12,13 +12,13 @@ export const userMenu = [
   },
   {
     title: "Create Draft",
-    path: "/create",
-    icon: EditNoteRoundedIcon,
+    path: "/drafts/create",
+    icon: DescriptionRoundedIcon,
   },
   {
-    title: "Draft History",
-    path: "/history",
-    icon: HistoryRoundedIcon,
+    title: "Templates",
+    path: "/templates",
+    icon: AutoAwesomeRoundedIcon,
   },
   {
     title: "Profile",
@@ -34,9 +34,9 @@ export const adminMenu = [
     icon: DashboardRoundedIcon,
   },
   {
-    title: "Templates",
+    title: "Manage Templates",
     path: "/admin/templates",
-    icon: DescriptionRoundedIcon,
+    icon: AdminPanelSettingsRoundedIcon,
   },
   {
     title: "Profile",

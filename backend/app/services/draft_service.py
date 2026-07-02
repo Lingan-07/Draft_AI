@@ -15,7 +15,7 @@ from app.schemas.draft import (
 )
 
 from app.services.ai_service import ai_service
-from app.utils.constants import DRAFT
+from app.utils.constants import (DRAFT,GENERATED)
 from app.utils.prompt_builder import PromptBuilder
 
 
@@ -131,11 +131,22 @@ class DraftService:
         db: Session,
         draft: Draft,
         prompt: str,
+        ai_function,
     ):
-        response = ai_service.generate(prompt)
+        response = ai_function(prompt)
 
-        draft.subject = response["subject"]
-        draft.body = response["body"]
+        subject = response.get("subject")
+        body = response.get("body")
+
+        if not body:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Invalid AI response.",
+            )
+
+        draft.subject = subject
+        draft.body = body
+        draft.status = GENERATED
 
         DraftRepository.save(
             db,
@@ -156,8 +167,8 @@ class DraftService:
         version = DraftVersion(
             draft_id=draft.id,
             version_no=version_no,
-            subject=draft.subject,
             tone=draft.tone,
+            subject=draft.subject,
             body=draft.body,
         )
 
@@ -203,6 +214,7 @@ class DraftService:
             db,
             draft,
             prompt,
+            ai_service.generate,
         )
 
     @staticmethod
@@ -226,6 +238,7 @@ class DraftService:
             db,
             draft,
             prompt,
+            ai_service.rewrite,
         )
 
     @staticmethod
@@ -249,6 +262,7 @@ class DraftService:
             db,
             draft,
             prompt,
+            ai_service.improve
         )
 
     @staticmethod
@@ -272,6 +286,7 @@ class DraftService:
             db,
             draft,
             prompt,
+            ai_service.shorten
         )
 
     @staticmethod
@@ -295,6 +310,7 @@ class DraftService:
             db,
             draft,
             prompt,
+            ai_service.expand
         )
 
     @staticmethod
@@ -322,4 +338,22 @@ class DraftService:
             db,
             draft,
             prompt,
+            ai_service.change_tone
+        )
+    
+    @staticmethod
+    def get_versions(
+        db: Session,
+        draft_id: int,
+        user_id: int,
+    ):
+        draft = DraftService.get_draft(
+            db,
+            draft_id,
+            user_id,
+        )
+
+        return DraftVersionRepository.get_by_draft(
+            db,
+            draft.id,
         )

@@ -8,7 +8,8 @@ export default function AuthLayout({ children }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        bgcolor: "#f5f7fb",
+        bgcolor: "background.default",
+        color: "text.primary",
         p: 2,
       }}
     >

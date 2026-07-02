@@ -5,7 +5,7 @@ const StatCard = ({ title, value, icon, color = "#2563EB" }) => {
     <Card
       elevation={0}
       sx={{
-        borderRadius: 4,
+        borderRadius: 2,
         border: "1px solid #E5E7EB",
         height: 100,
         width: "70%",

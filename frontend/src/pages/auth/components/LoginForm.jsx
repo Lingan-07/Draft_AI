@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import AppTextField from "../common/AppTextField";
-import PrimaryButton from "../common/PrimaryButton";
+import AppTextField from "../../../components/AppTextField";
+import PrimaryButton from "../../../components/PrimaryButton";
 
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../../hooks/useAuth";
 
 export default function LoginForm() {
   const navigate = useNavigate();

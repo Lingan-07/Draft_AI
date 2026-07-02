@@ -12,6 +12,7 @@ import DraftHistory from "../pages/draft/DraftHistory";
 
 import TemplateList from "../pages/template/TemplateList";
 import TemplateForm from "../pages/template/TemplateForm";
+import TemplateManagement from "../pages/admin/TemplateManagement";
 
 import Profile from "../pages/profile/Profile";
 
@@ -111,7 +112,29 @@ export default function AppRoutes() {
       />
 
       <Route
+        path="/admin/templates"
+        element={
+          <AdminRoute>
+            <DashboardLayout>
+              <TemplateManagement />
+            </DashboardLayout>
+          </AdminRoute>
+        }
+      />
+
+      <Route
         path="/admin/templates/new"
+        element={
+          <AdminRoute>
+            <DashboardLayout>
+              <TemplateForm />
+            </DashboardLayout>
+          </AdminRoute>
+        }
+      />
+
+      <Route
+        path="/admin/templates/:id/edit"
         element={
           <AdminRoute>
             <DashboardLayout>

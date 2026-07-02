@@ -38,3 +38,18 @@ class DraftVersionRepository:
             .order_by(DraftVersion.version_no.desc())
             .first()
         )
+    
+    @staticmethod
+    def get_next_version_no(
+        db: Session,
+        draft_id: int,
+    ):
+        latest = DraftVersionRepository.get_latest_version(
+            db,
+            draft_id,
+        )
+
+        if latest:
+            return latest.version_no + 1
+
+        return 1

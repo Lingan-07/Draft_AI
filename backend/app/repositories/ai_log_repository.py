@@ -26,3 +26,13 @@ class AIGenerationLogRepository:
             .order_by(AIGenerationLog.created_at.desc())
             .all()
         )
+    
+    @staticmethod
+    def save(
+        db: Session,
+        log: AIGenerationLog,
+    ):
+        db.add(log)
+        db.commit()
+        db.refresh(log)
+        return log

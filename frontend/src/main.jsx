@@ -4,20 +4,17 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-
 import { AuthProvider } from "./context/AuthProvider";
+import ColorModeProvider from "./context/ColorModeProvider";
 
 import App from "./App";
-import theme from "./theme/theme";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(
+  document.getElementById("root")
+).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-
+      <ColorModeProvider>
         <Toaster
           position="top-right"
           toastOptions={{
@@ -28,7 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <AuthProvider>
           <App />
         </AuthProvider>
-      </ThemeProvider>
+      </ColorModeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

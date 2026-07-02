@@ -4,13 +4,13 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.dependencies.auth import get_current_user
 from app.models.user import User
-from app.repositories.draft_version_repository import DraftVersionRepository
 
-from app.schemas.ai import ToneRequest
 from app.schemas.draft import (
     DraftCreateRequest,
     DraftUpdateRequest,
     DraftResponse,
+    DraftVersionResponse,
+    ToneRequest,
 )
 
 from app.services.draft_service import DraftService
@@ -100,6 +100,10 @@ def delete_draft(
     )
 
 
+# -----------------------------
+# AI Operations
+# -----------------------------
+
 @router.post(
     "/{draft_id}/generate",
     response_model=DraftResponse,
@@ -149,22 +153,6 @@ def improve_draft(
 
 
 @router.post(
-    "/{draft_id}/shorten",
-    response_model=DraftResponse,
-)
-def shorten_draft(
-    draft_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-):
-    return DraftService.shorten_draft(
-        db,
-        draft_id,
-        current_user.id,
-    )
-
-
-@router.post(
     "/{draft_id}/expand",
     response_model=DraftResponse,
 )
@@ -174,6 +162,22 @@ def expand_draft(
     current_user: User = Depends(get_current_user),
 ):
     return DraftService.expand_draft(
+        db,
+        draft_id,
+        current_user.id,
+    )
+
+
+@router.post(
+    "/{draft_id}/shorten",
+    response_model=DraftResponse,
+)
+def shorten_draft(
+    draft_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return DraftService.shorten_draft(
         db,
         draft_id,
         current_user.id,
@@ -198,21 +202,21 @@ def change_tone(
     )
 
 
+# -----------------------------
+# Versions
+# -----------------------------
+
 @router.get(
     "/{draft_id}/versions",
+    response_model=list[DraftVersionResponse],
 )
 def get_versions(
     draft_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    draft = DraftService.get_draft(
+    return DraftService.get_versions(
         db,
         draft_id,
         current_user.id,
-    )
-
-    return DraftVersionRepository.get_by_draft(
-        db,
-        draft.id,
     )

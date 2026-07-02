@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import {
   Box,
   Divider,
@@ -11,14 +13,35 @@ import {
 
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
-import { useLocation } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
-import { userMenu } from "../../utils/navigation";
+import AuthContext from "../../../context/AuthContext";
+
+import {
+  userMenu,
+  adminMenu,
+} from "../../../utils/navigation";
 
 const drawerWidth = 260;
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const { user, logout } = useContext(AuthContext);
+
+  const menu =
+    user?.role === "ADMIN"
+      ? adminMenu
+      : userMenu;
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <Drawer
@@ -26,17 +49,19 @@ const Sidebar = () => {
       sx={{
         width: drawerWidth,
         flexShrink: 0,
+
         "& .MuiDrawer-paper": {
           width: drawerWidth,
           boxSizing: "border-box",
           borderRight: "1px solid #E5E7EB",
-          backgroundColor: "#FFFFFF",
+          bgcolor: "background.default",
+          color: "text.primary",
         },
       }}
     >
       <Box p={3} pb={10}>
         <Typography
-          sx={{pt:1}}
+          sx={{ pt: 1 }}
           variant="h5"
           fontWeight="bold"
           color="primary"
@@ -54,16 +79,21 @@ const Sidebar = () => {
         </Typography>
       </Box>
 
-      <Divider sx={{mt:2.4}} />
+      <Divider sx={{ mt: 2.4 }} />
 
       <List>
-        {userMenu.map((item) => {
+        {menu.map((item) => {
           const Icon = item.icon;
 
           return (
             <ListItemButton
               key={item.title}
-              selected={location.pathname === item.path}
+              selected={
+                location.pathname === item.path
+              }
+              onClick={() =>
+                navigate(item.path)
+              }
               sx={{
                 mx: 1,
                 mb: 0.5,
@@ -74,31 +104,52 @@ const Sidebar = () => {
                   color: "#2563EB",
                 },
 
-                "&.Mui-selected .MuiListItemIcon-root": {
-                  color: "#2563EB",
+                "&.Mui-selected .MuiListItemIcon-root":
+                  {
+                    color: "#2563EB",
+                  },
+
+                "&:hover": {
+                  backgroundColor: "#F3F4F6",
                 },
               }}
             >
-              <ListItemIcon>
+              <ListItemIcon
+                sx={{
+                  minWidth: 42,
+                }}
+              >
                 <Icon />
               </ListItemIcon>
 
-              <ListItemText primary={item.title} />
+              <ListItemText
+                primary={item.title}
+              />
             </ListItemButton>
           );
         })}
       </List>
 
-      <Box sx={{flexGrow:1}} />
+      <Box sx={{ flexGrow: 1 }} />
 
       <Divider />
 
       <List>
         <ListItemButton
+          onClick={handleLogout}
           sx={{
             mx: 1,
             mb: 2,
             borderRadius: 2,
+
+            "&:hover": {
+              backgroundColor: "#FEF2F2",
+              color: "#DC2626",
+            },
+
+            "&:hover .MuiListItemIcon-root": {
+              color: "#DC2626",
+            },
           }}
         >
           <ListItemIcon>
