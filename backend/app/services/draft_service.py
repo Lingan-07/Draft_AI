@@ -90,7 +90,7 @@ class DraftService:
         )
 
         update_data = request.model_dump(
-            exclude_unset=True
+            exclude_unset=True,
         )
 
         for key, value in update_data.items():
@@ -100,10 +100,38 @@ class DraftService:
                 value,
             )
 
-        return DraftRepository.update(
+        DraftRepository.update(
             db,
             draft,
         )
+
+        latest_version = (
+            DraftVersionRepository.get_latest_version(
+                db,
+                draft.id,
+            )
+        )
+
+        version_no = (
+            1
+            if latest_version is None
+            else latest_version.version_no + 1
+        )
+
+        version = DraftVersion(
+            draft_id=draft.id,
+            version_no=version_no,
+            tone=draft.tone,
+            subject=draft.subject,
+            body=draft.body,
+        )
+
+        DraftVersionRepository.create(
+            db,
+            version,
+        )
+
+        return draft
 
     @staticmethod
     def delete_draft(

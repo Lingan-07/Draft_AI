@@ -31,6 +31,12 @@ const styles = {
         mt: 3,
     },
 
+    info_button: {
+        pt:2,
+        justifyContent: "flex-end",
+        gap:2
+    },
+
     info_card: {
         borderRadius: 4,
         border: "1px solid #E5E7EB",

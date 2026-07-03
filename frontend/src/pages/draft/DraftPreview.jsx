@@ -23,6 +23,7 @@ import {
   expandDraft,
   shortenDraft,
   changeTone,
+  updateDraft,
 } from "../../api/draftApi";
 
 const DraftPreview = () => {
@@ -69,6 +70,25 @@ const DraftPreview = () => {
     }
   };
 
+  const handleManualUpdate = async (data) => {
+    try {
+      setActionLoading(true);
+
+      await updateDraft(id, data);
+
+      await loadDraft();
+
+      toast.success("Draft updated successfully.");
+    } catch (error) {
+      toast.error(
+        error.response?.data?.detail ??
+          "Failed to update draft."
+      );
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <Box>
@@ -93,7 +113,11 @@ const DraftPreview = () => {
         sx={styles.preview_grid}
       >
         <Grid size={{ xs: 12, md: 8 }}>
-          <DraftInfoCard draft={draft} />
+          <DraftInfoCard
+            draft={draft}
+            loading={actionLoading}
+            onSave={handleManualUpdate}
+          />
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>

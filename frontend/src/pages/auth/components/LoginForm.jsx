@@ -1,11 +1,10 @@
-import { Box, Link, Paper, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import AppTextField from "../../../components/AppTextField";
 import PrimaryButton from "../../../components/PrimaryButton";
-import styles from "./Styles";
 
 import { useAuth } from "../../../hooks/useAuth";
 
@@ -40,10 +39,7 @@ export default function LoginForm() {
   };
 
   return (
-    <Paper
-      elevation={4}
-      sx={styles.login_paper}
-    >
+    <Box>
       <Typography
         variant="h4"
         fontWeight="bold"
@@ -114,6 +110,6 @@ export default function LoginForm() {
           Register
         </Link>
       </Typography>
-    </Paper>
+    </Box>
   );
 }

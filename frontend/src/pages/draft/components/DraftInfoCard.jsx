@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   Box,
   Card,
@@ -6,8 +8,10 @@ import {
   Divider,
   IconButton,
   Stack,
+  TextField,
   Tooltip,
   Typography,
+  Button,
 } from "@mui/material";
 
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
@@ -17,15 +21,37 @@ import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
 import toast from "react-hot-toast";
 import styles from "./Styles"
 
-const DraftInfoCard = ({ draft }) => {
+const DraftInfoCard = (props) => {
+  const {draft, loading, onSave} = props;
+  const [editing, setEditing] = useState(false);
+
+  const [subject, setSubject] = useState(
+    draft.subject ?? ""
+  );
+
+  const [body, setBody] = useState(
+    draft.body ?? ""
+  );
+
+  useEffect(() => {
+    setSubject(draft.subject ?? "");
+    setBody(draft.body ?? "");
+  }, [draft]);
+
   const copyDraft = async () => {
     const text = `Subject: ${draft.subject ?? ""}
-
-${draft.body ?? ""}`;
-
+    ${draft.body ?? ""}`;
     await navigator.clipboard.writeText(text);
-
     toast.success("Copied to clipboard");
+  };
+
+  const handleSave = async () => {
+    await onSave({
+      subject,
+      body,
+    });
+
+    setEditing(false);
   };
 
   return (
@@ -110,14 +136,27 @@ ${draft.body ?? ""}`;
           SUBJECT :
         </Typography>
 
-        <Typography
-          variant="h6"
-          fontWeight={600}
-          mt={1}
-          mb={4}
-        >
-          {draft.subject || "No subject generated yet"}
-        </Typography>
+        {editing ? (
+          <TextField
+            fullWidth
+            size="small"
+            value={subject}
+            onChange={(e) =>
+              setSubject(e.target.value)
+            }
+            sx={{ mt: 1, mb: 4 }}
+          />
+        ) : (
+          <Typography
+            variant="h6"
+            fontWeight={600}
+            mt={1}
+            mb={4}
+          >
+            {draft.subject ||
+              "No subject generated yet"}
+          </Typography>
+        )}
 
         {/* Body */}
 
@@ -129,12 +168,57 @@ ${draft.body ?? ""}`;
           BODY :
         </Typography>
 
-        <Box
-          sx={styles.info_box}
+        {editing ? (
+          <TextField
+            multiline
+            minRows={10}
+            fullWidth
+            value={body}
+            onChange={(e) =>
+              setBody(e.target.value)
+            }
+          />
+        ) : (
+          <Box sx={styles.info_box}>
+            {draft.body ||
+              "Click Generate to create your draft using AI."}
+          </Box>
+        )}
+
+        <Stack
+          direction="row"
+          sx={styles.info_button}
         >
-          {draft.body ||
-            "Click Generate to create your draft using AI."}
-        </Box>
+          {editing ? (
+            <>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  setSubject(draft.subject ?? "");
+                  setBody(draft.body ?? "");
+                  setEditing(false);
+                }}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                variant="contained"
+                onClick={handleSave}
+                disabled={loading}
+              >
+                {loading ? "Saving..." : "Save"}
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => setEditing(true)}
+            >
+              Edit
+            </Button>
+          )}
+        </Stack>
       </CardContent>
     </Card>
   );
