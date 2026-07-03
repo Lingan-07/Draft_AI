@@ -17,6 +17,7 @@ import UnfoldMoreRoundedIcon from "@mui/icons-material/UnfoldMoreRounded";
 import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
 
 import AppSelect from "../../../components/AppSelect";
+import styles from "./Styles";
 
 const DraftActionCard = ({
   loading,
@@ -34,14 +35,9 @@ const DraftActionCard = ({
   return (
     <Card
       elevation={0}
-      sx={{
-        borderRadius: 4,
-        border: "1px solid #E5E7EB",
-        position: "sticky",
-        top: 100,
-      }}
+      sx={styles.actioncard_card}
     >
-      <CardContent sx={{ p: 3 }}>
+      <CardContent sx={styles.actioncard_cardcontent}>
         <Typography
           variant="h6"
           fontWeight={700}
@@ -102,7 +98,7 @@ const DraftActionCard = ({
           </Button>
         </Stack>
 
-        <Divider sx={{ my: 4 }} />
+        <Divider sx={styles.divider} />
 
         <Typography
           variant="subtitle2"
@@ -139,7 +135,7 @@ const DraftActionCard = ({
 
         <Button
           fullWidth
-          sx={{ mt: 2 }}
+          sx={styles.actioncard_button}
           variant="contained"
           onClick={() => onChangeTone(selectedTone)}
           disabled={loading}
@@ -147,7 +143,7 @@ const DraftActionCard = ({
           Apply Tone
         </Button>
 
-        <Divider sx={{ my: 4 }} />
+        <Divider sx={styles.actioncard_divider} />
 
         <Button
           fullWidth

@@ -12,6 +12,7 @@ import AppSelect from "../../components/AppSelect";
 
 import PrimaryButton from "../../components/PrimaryButton";
 import SecondaryButton from "../../components/SecondaryButton";
+import styles from "./Styles";
 
 import {
   createTemplate,
@@ -97,15 +98,7 @@ const TemplateForm = () => {
 
       <Card
         elevation={0}
-        sx={{
-          mt: 3,
-          p: 4,
-          maxWidth: 900,
-          borderRadius: 4,
-          bgcolor: "background.paper",
-          border: 1,
-          borderColor: "divider",
-        }}
+        sx={styles.form_card}
       >
         <Box
           component="form"
@@ -207,12 +200,7 @@ const TemplateForm = () => {
           />
 
           <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: 2,
-              mt: 4,
-            }}
+            sx={styles.form_box}
           >
             <SecondaryButton
               type="button"

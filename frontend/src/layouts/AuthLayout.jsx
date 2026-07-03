@@ -1,43 +1,19 @@
 import { Box, Container, Paper, Typography } from "@mui/material";
+import styles from "./Styles";
 
 export default function AuthLayout({ children }) {
   return (
     <Box
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        bgcolor: "background.default",
-        color: "text.primary",
-        p: 2,
-      }}
+      sx={styles.auth_box}
     >
       <Container maxWidth="lg">
         <Paper
           elevation={6}
-          sx={{
-            overflow: "hidden",
-            borderRadius: 4,
-            display: "flex",
-            minHeight: "650px",
-          }}
+          sx={styles.auth_paper}
         >
           {/* Left Side */}
           <Box
-            sx={{
-              width: "50%",
-              bgcolor: "primary.main",
-              color: "white",
-              display: {
-                xs: "none",
-                md: "flex",
-              },
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              p: 6,
-            }}
+            sx={styles.auth_left_side}
           >
             <Typography
               variant="h3"
@@ -57,13 +33,7 @@ export default function AuthLayout({ children }) {
 
           {/* Right Side */}
           <Box
-            sx={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              p: 5,
-            }}
+            sx={styles.auth_right_side}
           >
             {children}
           </Box>

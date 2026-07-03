@@ -25,6 +25,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import toast from "react-hot-toast";
 
 import PageHeader from "../../components/PageHeader";
+import styles from "./Styles";
 
 import {
   getTemplates,
@@ -95,7 +96,7 @@ const TemplateManagement = () => {
         display="flex"
         justifyContent="flex-end"
         mb={3}
-        sx={{pt:3}}
+        sx={styles.box}
       >
         <Button
           variant="contained"
@@ -108,7 +109,7 @@ const TemplateManagement = () => {
         </Button>
       </Box>
 
-      <Grid container spacing={3} sx={{pt:3}}>
+      <Grid container spacing={3} sx={styles.grid}>
         {templates.map((template) => (
           <Grid
             key={template.id}
@@ -116,10 +117,7 @@ const TemplateManagement = () => {
           >
             <Card
               elevation={0}
-              sx={{
-                border: "1px solid #E5E7EB",
-                borderRadius: 2,
-              }}
+              sx={styles.card}
             >
               <CardContent>
                 <Typography
@@ -134,7 +132,7 @@ const TemplateManagement = () => {
                   spacing={1}
                   mt={2}
                   mb={2}
-                  sx={{gap:1, pt:1, pb:1}}
+                  sx={styles.stack}
                 >
                   <Chip
                     label={template.message_type}
@@ -167,7 +165,7 @@ const TemplateManagement = () => {
                 <Stack
                   direction="row"
                   spacing={2}
-                  sx={{pt:2}}
+                  sx={styles.button_stack}
                 >
                   <Button
                     startIcon={<EditRoundedIcon />}

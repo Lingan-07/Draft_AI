@@ -10,6 +10,7 @@ import SmartToyRoundedIcon from "@mui/icons-material/SmartToyRounded";
 import StatCard from "./components/StatCard";
 import RecentDraftTable from "./components/RecentDraftTable";
 import Loader from "../../components/Loader";
+import styles from "./components/Styles";
 import { getAllDrafts } from "../../api/draftApi";
 
 import { getUserDashboard } from "../../api/dashboardApi";
@@ -60,7 +61,7 @@ const UserDashboard = () => {
         <Typography
           variant="h6"
           color="text.secondary"
-          sx={{pb:5}}
+          sx={styles.user}
         >
           Create professional emails and messages faster with AI assistance.
         </Typography>

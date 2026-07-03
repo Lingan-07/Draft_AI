@@ -1,4 +1,5 @@
 import { Button, CircularProgress } from "@mui/material";
+import styles from "./Styles";
 
 const PrimaryButton = ({
   children,
@@ -15,12 +16,7 @@ const PrimaryButton = ({
       fullWidth={fullWidth}
       disabled={disabled || loading}
       onClick={onClick}
-      sx={{
-        borderRadius: 2,
-        px: 3,
-        py: 1.2,
-        fontWeight: 600,
-      }}
+      sx={styles.primarybutton}
     >
       {loading ? (
         <CircularProgress

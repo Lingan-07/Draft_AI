@@ -2,6 +2,7 @@ import {
   Box,
   Typography,
 } from "@mui/material";
+import styles from "./Styles";
 
 const PageHeader = ({
   title,
@@ -12,7 +13,7 @@ const PageHeader = ({
       <Typography
         variant="h5"
         fontWeight={700}
-        sx={{fontSize: { xs: "1.5rem", sm: "2rem" }}}
+        sx={styles.pageheader}
       >
         {title}
       </Typography>

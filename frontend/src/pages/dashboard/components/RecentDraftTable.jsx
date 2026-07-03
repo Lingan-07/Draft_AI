@@ -11,18 +11,16 @@ import {
 } from "@mui/material";
 
 import EmptyState from "../../../components/EmptyState";
+import styles from "./Styles";
 
 const RecentDraftTable = ({ drafts = [] }) => {
   return (
-    <Box sx={{ mt: 6 }}>
+    <Box sx={styles.recent_draft_box}>
       <Card
         elevation={0}
-        sx={{
-          borderRadius: 4,
-          border: "1px solid #E5E7EB",
-        }}
+        sx={styles.recent_draft_card}
       >
-        <CardContent sx={{ p: 4 }}>
+        <CardContent sx={styles.recent_draft_cardcontent}>
           <Typography
             variant="h5"
             fontWeight={700}
@@ -37,19 +35,19 @@ const RecentDraftTable = ({ drafts = [] }) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 700 }}>
+                  <TableCell sx={styles.recent_draft_cell}>
                     Title
                   </TableCell>
 
-                  <TableCell sx={{ fontWeight: 700 }}>
+                  <TableCell sx={styles.recent_draft_cell}>
                     Type
                   </TableCell>
 
-                  <TableCell sx={{ fontWeight: 700 }}>
+                  <TableCell sx={styles.recent_draft_cell}>
                     Tone
                   </TableCell>
 
-                  <TableCell sx={{ fontWeight: 700 }}>
+                  <TableCell sx={styles.recent_draft_cell}>
                     Date
                   </TableCell>
                 </TableRow>

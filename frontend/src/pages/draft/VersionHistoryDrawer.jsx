@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
 import toast from "react-hot-toast";
+import styles from "./components/Styles";
 
 import { getDraftVersions } from "../../api/draftApi";
 
@@ -51,10 +52,7 @@ const VersionHistoryDrawer = ({
       onClose={onClose}
     >
       <Box
-        sx={{
-          width: 420,
-          p: 3,
-        }}
+        sx={styles.version_box}
       >
         <Stack
           direction="row"
@@ -88,12 +86,7 @@ const VersionHistoryDrawer = ({
           versions.map((version) => (
             <Box
               key={version.id}
-              sx={{
-                mb: 3,
-                p: 2,
-                border: "1px solid #E5E7EB",
-                borderRadius: 3,
-              }}
+              sx={styles.version_map_box}
             >
               <Stack
                 direction="row"
@@ -129,17 +122,14 @@ const VersionHistoryDrawer = ({
                 Body
               </Typography>
               <Box
-              sx={{bgcolor:"Background.paper"}}>
+              sx={styles.version_typography_box}>
               <Typography
-                sx={{
-                  whiteSpace: "pre-wrap",
-                  color:"text.primary"
-                }}
+                sx={styles.version_typography}
               >
                 {version.body}
               </Typography>
               </Box>
-              <Divider sx={{ my: 2 }} />
+              <Divider sx={styles.version_divider} />
 
               <Typography
                 variant="caption"

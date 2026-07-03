@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 
 import StatCard from "./components/StatCard";
 import { getAdminDashboard } from "../../api/dashboardApi";
+import styles from "./components/Styles";
 
 const AdminDashboard = () => {
   const [dashboard, setDashboard] = useState(null);
@@ -64,7 +65,7 @@ const AdminDashboard = () => {
         <Typography
           variant="h6"
           color="text.secondary"
-          sx = {{pb:5}}
+          sx = {styles.admin}
         >
           Monitor users, templates and AI usage.
         </Typography>

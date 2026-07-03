@@ -11,6 +11,7 @@ import AppSelect from "../../../components/AppSelect";
 import AppTextArea from "../../../components/AppTextArea";
 import PrimaryButton from "../../../components/PrimaryButton";
 import SecondaryButton from "../../../components/SecondaryButton";
+import styles from "./Styles";
 
 import { createDraft } from "../../../api/draftApi";
 
@@ -53,11 +54,7 @@ const DraftForm = ({ template }) => {
   return (
     <Card
       elevation={0}
-      sx={{
-        borderRadius: 4,
-        border: "1px solid #E5E7EB",
-        p: 3,
-      }}
+      sx={styles.form_card}
     >
       <Box
         component="form"
@@ -164,12 +161,7 @@ const DraftForm = ({ template }) => {
         />
 
         <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            gap: 2,
-            mt: 3,
-          }}
+          sx={styles.form_box}
         >
           <SecondaryButton
             type="button"

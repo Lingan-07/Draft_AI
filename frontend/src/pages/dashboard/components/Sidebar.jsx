@@ -25,7 +25,7 @@ import {
   adminMenu,
 } from "../../../utils/navigation";
 
-const drawerWidth = 260;
+import styles from "./Styles";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -46,22 +46,11 @@ const Sidebar = () => {
   return (
     <Drawer
       variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-          borderRight: "1px solid #E5E7EB",
-          bgcolor: "background.default",
-          color: "text.primary",
-        },
-      }}
+      sx={styles.sidebar_drawer}
     >
       <Box p={3} pb={10}>
         <Typography
-          sx={{ pt: 1 }}
+          sx={styles.sidebar_typography}
           variant="h5"
           fontWeight="bold"
           color="primary"
@@ -79,7 +68,7 @@ const Sidebar = () => {
         </Typography>
       </Box>
 
-      <Divider sx={{ mt: 2.4 }} />
+      <Divider sx={styles.sidebar_divider} />
 
       <List>
         {menu.map((item) => {
@@ -94,30 +83,10 @@ const Sidebar = () => {
               onClick={() =>
                 navigate(item.path)
               }
-              sx={{
-                mx: 1,
-                mb: 0.5,
-                borderRadius: 2,
-
-                "&.Mui-selected": {
-                  backgroundColor: "#E8F0FE",
-                  color: "#2563EB",
-                },
-
-                "&.Mui-selected .MuiListItemIcon-root":
-                  {
-                    color: "#2563EB",
-                  },
-
-                "&:hover": {
-                  backgroundColor: "#F3F4F6",
-                },
-              }}
+              sx={styles.sidebar_listitem}
             >
               <ListItemIcon
-                sx={{
-                  minWidth: 42,
-                }}
+                sx={styles.sidebar_listitemicon}
               >
                 <Icon />
               </ListItemIcon>
@@ -130,27 +99,14 @@ const Sidebar = () => {
         })}
       </List>
 
-      <Box sx={{ flexGrow: 1 }} />
+      <Box sx={styles.sidebar_box} />
 
       <Divider />
 
       <List>
         <ListItemButton
           onClick={handleLogout}
-          sx={{
-            mx: 1,
-            mb: 2,
-            borderRadius: 2,
-
-            "&:hover": {
-              backgroundColor: "#FEF2F2",
-              color: "#DC2626",
-            },
-
-            "&:hover .MuiListItemIcon-root": {
-              color: "#DC2626",
-            },
-          }}
+          sx={styles.sidebar_logout}
         >
           <ListItemIcon>
             <LogoutRoundedIcon />

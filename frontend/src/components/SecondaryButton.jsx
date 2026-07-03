@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import styles from "./Styles";
 
 const SecondaryButton = ({
   children,
@@ -10,9 +11,7 @@ const SecondaryButton = ({
       variant="outlined"
       type={type}
       onClick={onClick}
-      sx={{
-        borderRadius: 2,
-      }}
+      sx={styles.secondarybutton}
     >
       {children}
     </Button>

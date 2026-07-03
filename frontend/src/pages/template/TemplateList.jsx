@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 
 import PageHeader from "../../components/PageHeader";
 import { getTemplates } from "../../api/templateApi";
+import styles from "./Styles";
 
 const TemplateList = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const TemplateList = () => {
         <Grid
           container
           spacing={3}
-          sx={{ mt: 1 }}
+          sx={styles.list_grid}
         >
           {templates.map((template) => (
             <Grid
@@ -83,29 +84,10 @@ const TemplateList = () => {
             >
               <Card
                 elevation={0}
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  bgcolor: "background.paper",
-                  color: "text.primary",
-                  borderRadius: 3,
-                  border: 1,
-                  borderColor: "divider",
-                  transition: "all .25s ease",
-
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                    boxShadow: 6,
-                  },
-                }}
+                sx={styles.list_card}
               >
                 <CardContent
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    flexGrow: 1,
-                  }}
+                  sx={styles.list_cardcontent}
                 >
                   <Typography
                     variant="h6"
@@ -152,14 +134,7 @@ const TemplateList = () => {
                   <Typography
                     variant="body2"
                     color="text.secondary"
-                    sx={{
-                      flexGrow: 1,
-                      overflow: "hidden",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 4,
-                      WebkitBoxOrient: "vertical",
-                      pt:2,
-                    }}
+                    sx={styles.list_typography_prompt}
                   >
                     {template.prompt_text}
                   </Typography>
@@ -167,10 +142,7 @@ const TemplateList = () => {
                   <Typography
                     variant="caption"
                     color="text.secondary"
-                    sx={{
-                      mt: 2,
-                      display: "block",
-                    }}
+                    sx={styles.list_typography_created}
                   >
                     Created on{" "}
                     {new Date(
@@ -181,7 +153,7 @@ const TemplateList = () => {
                   <Button
                     fullWidth
                     variant="contained"
-                    sx={{ mt: 3 }}
+                    sx={styles.list_button}
                     onClick={() =>
                       navigate(
                         "/drafts/create",

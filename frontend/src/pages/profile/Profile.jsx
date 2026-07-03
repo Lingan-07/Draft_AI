@@ -13,6 +13,7 @@ import {
 import toast from "react-hot-toast";
 
 import PageHeader from "../../components/PageHeader";
+import styles from "./Styles";
 import { getProfile } from "../../api/profileApi";
 
 const Profile = () => {
@@ -59,26 +60,16 @@ const Profile = () => {
 
       <Card
         elevation={0}
-        sx={{
-          mt: 3,
-          borderRadius: 4,
-          border: "1px solid #E5E7EB",
-          maxWidth: 700,
-        }}
+        sx={styles.card}
       >
-        <CardContent sx={{ p: 4 }}>
+        <CardContent sx={styles.cardcontent}>
           <Stack
             spacing={3}
             alignItems="center"
           >
-          <Box sx={{ display: "flex", gap: 2}}>
+          <Box sx={styles.box}>
             <Avatar
-              sx={{
-                width: 90,
-                height: 90,
-                fontSize: 32,
-                bgcolor: "primary.main",
-              }}
+              sx={styles.avatar}
             >
               {profile.name.charAt(0).toUpperCase()}
             </Avatar>
@@ -86,7 +77,7 @@ const Profile = () => {
             <Typography
               variant="h5"
               fontWeight={700}
-              sx={{alignSelf:"center"}}
+              sx={styles.typography}
             >
               {profile.name}
             </Typography>

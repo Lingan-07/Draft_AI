@@ -15,6 +15,7 @@ import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
 
 import toast from "react-hot-toast";
+import styles from "./Styles"
 
 const DraftInfoCard = ({ draft }) => {
   const copyDraft = async () => {
@@ -30,12 +31,9 @@ ${draft.body ?? ""}`;
   return (
     <Card
       elevation={0}
-      sx={{
-        borderRadius: 4,
-        border: "1px solid #E5E7EB",
-      }}
+      sx={styles.info_card}
     >
-      <CardContent sx={{ p: 4 }}>
+      <CardContent sx={styles.info_cardcontent}>
         {/* Header */}
 
         <Stack
@@ -47,7 +45,7 @@ ${draft.body ?? ""}`;
             <Typography
               variant="h5"
               fontWeight={700}
-              sx={{ pb: 1}}
+              sx={styles.info_typography}
             >
               {draft.title}
             </Typography>
@@ -55,14 +53,14 @@ ${draft.body ?? ""}`;
             <Typography
               color="text.secondary"
               mt={1}
-              sx={{ pb: 1}}
+              sx={styles.info_typography}
             >
               AI Generated Draft
             </Typography>
           </Box>
 
           <Tooltip title="Copy Draft"
-          sx={{bottom: 20}}>
+          sx={styles.info_tooltip}>
             <IconButton onClick={copyDraft}>
               <ContentCopyRoundedIcon />
             </IconButton>
@@ -101,7 +99,7 @@ ${draft.body ?? ""}`;
           />
         </Stack>
 
-        <Divider sx={{ my: 4 }} />
+        <Divider sx={styles.divider} />
 
         {/* Subject */}
 
@@ -126,24 +124,13 @@ ${draft.body ?? ""}`;
         <Typography
           variant="subtitle2"
           color="text.secondary"
-          sx={{ pt: 3}}
+          sx={styles.info_body_typography}
         >
           BODY :
         </Typography>
 
         <Box
-          sx={{
-            mt: 2,
-            p: 3,
-            bgcolor: "background.paper",
-            color: "text.primary",
-            borderRadius: 3,
-            border: "1px solid #E5E7EB",
-            minHeight: 350,
-            whiteSpace: "pre-wrap",
-            lineHeight: 1.8,
-            fontSize: 15,
-          }}
+          sx={styles.info_box}
         >
           {draft.body ||
             "Click Generate to create your draft using AI."}

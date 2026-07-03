@@ -11,7 +11,7 @@ import {
 import toast from "react-hot-toast";
 
 import PageHeader from "../../components/PageHeader";
-
+import styles from "./components/Styles"
 import DraftInfoCard from "./components/DraftInfoCard";
 import DraftActionCard from "./components/DraftActionCard";
 
@@ -77,7 +77,7 @@ const DraftPreview = () => {
         <Skeleton
           variant="rounded"
           height={500}
-          sx={{ mt: 3 }}
+          sx={styles.preview_skeleton}
         />
       </Box>
     );
@@ -90,7 +90,7 @@ const DraftPreview = () => {
       <Grid
         container
         spacing={3}
-        sx={{ mt: 1 }}
+        sx={styles.preview_grid}
       >
         <Grid size={{ xs: 12, md: 8 }}>
           <DraftInfoCard draft={draft} />

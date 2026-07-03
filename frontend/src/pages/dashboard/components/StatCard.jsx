@@ -1,30 +1,14 @@
 import { Card, CardContent, Typography, Box } from "@mui/material";
+import styles from "./Styles";
 
 const StatCard = ({ title, value, icon, color = "#2563EB" }) => {
   return (
     <Card
       elevation={0}
-      sx={{
-        borderRadius: 2,
-        border: "1px solid #E5E7EB",
-        height: 100,
-        width: "70%",
-        transition: "all .2s ease",
-
-        "&:hover": {
-          transform: "translateY(-4px)",
-          boxShadow: "0 8px 20px rgba(0,0,0,.08)",
-        },
-      }}
+      sx={styles.statcard_card}
     >
       <CardContent
-        sx={{
-          height: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          p: 2.5,
-        }}
+        sx={styles.statcard_cardcontent}
       >
         <Box>
           <Typography

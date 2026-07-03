@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 
 import AppTextField from "../../../components/AppTextField";
 import PrimaryButton from "../../../components/PrimaryButton";
+import styles from "./Styles";
 
 import { useAuth } from "../../../hooks/useAuth";
 
@@ -41,13 +42,7 @@ export default function LoginForm() {
   return (
     <Paper
       elevation={4}
-      sx={{
-        maxWidth: 450,
-        mx: "auto",
-        mt: 8,
-        p: 4,
-        borderRadius: 3,
-      }}
+      sx={styles.login_paper}
     >
       <Typography
         variant="h4"

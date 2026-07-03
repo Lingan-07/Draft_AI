@@ -18,6 +18,7 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import toast from "react-hot-toast";
 
 import PageHeader from "../../components/PageHeader";
+import styles from "./components/Styles"
 import { getDraftVersions } from "../../api/draftApi";
 
 const DraftHistory = () => {
@@ -63,7 +64,7 @@ const DraftHistory = () => {
 
       <Button
         startIcon={<ArrowBackRoundedIcon />}
-        sx={{ mb: 3 }}
+        sx={styles.history_button}
         onClick={() =>
           navigate(`/drafts/${id}`)
         }
@@ -88,10 +89,7 @@ const DraftHistory = () => {
               <Card
                 key={version.id}
                 elevation={0}
-                sx={{
-                  borderRadius: 4,
-                  border: "1px solid #E5E7EB",
-                }}
+                sx={styles.history_card}
               >
                 <CardContent>
                   <Stack
@@ -99,7 +97,7 @@ const DraftHistory = () => {
                     justifyContent="space-between"
                     alignItems="center"
                     mb={2}
-                    sx={{gap:2}}
+                    sx={styles.history_stack}
                   >
                     <Typography
                       variant="h6"
@@ -114,7 +112,7 @@ const DraftHistory = () => {
                     />
                   </Stack>
 
-                  <Divider sx={{ mb: 2 }} />
+                  <Divider sx={styles.history_divider} />
 
                   <Typography
                     variant="subtitle2"
@@ -124,7 +122,7 @@ const DraftHistory = () => {
                   </Typography>
 
                   <Typography
-                    sx={{ mb: 3 }}
+                    sx={styles.history_typography}
                   >
                     {version.subject || "-"}
                   </Typography>
@@ -137,13 +135,7 @@ const DraftHistory = () => {
                   </Typography>
 
                   <Box
-                    sx={{
-                      bgcolor: "background.paper",
-                      color: "text.primary",
-                      p: 2,
-                      borderRadius: 2,
-                      whiteSpace: "pre-wrap",
-                    }}
+                    sx={styles.history_box}
                   >
                     {version.body}
                   </Box>
@@ -151,10 +143,7 @@ const DraftHistory = () => {
                   <Typography
                     variant="caption"
                     color="text.secondary"
-                    sx={{
-                      display: "block",
-                      mt: 2,
-                    }}
+                    sx={styles.history_created}
                   >
                     {new Date(
                       version.created_at
