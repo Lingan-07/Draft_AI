@@ -26,16 +26,16 @@ const styles = {
     },
 
     recent_draft_box: {
-        mt: 6
+        mt: 2
     },
 
     recent_draft_card: {
-        borderRadius: 4,
+        borderRadius: 1,
         border: "1px solid #E5E7EB",
     },
 
     recent_draft_cardcontent: {
-        p: 4
+        p: 2
     },
 
     recent_draft_cell: {
@@ -132,6 +132,11 @@ const styles = {
 
     user: {
         pb:5
+    },
+
+    textfield: {
+        width: "500px",
+        pt: 6,
     }
 }
 

@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 
 from app.models.draft import Draft
 
@@ -30,10 +31,24 @@ class DraftRepository:
     def get_all_by_user(
         db: Session,
         user_id: int,
+        search: str | None = None,
     ):
-        return (
+        query = (
             db.query(Draft)
             .filter(Draft.user_id == user_id)
+        )
+
+        if search:
+            query = query.filter(
+                or_(
+                    Draft.title.ilike(f"%{search}%"),
+                    Draft.subject.ilike(f"%{search}%"),
+                    Draft.body.ilike(f"%{search}%"),
+                )
+            )
+
+        return (
+            query
             .order_by(Draft.created_at.desc())
             .all()
         )

@@ -42,12 +42,14 @@ def create_draft(
     response_model=list[DraftResponse],
 )
 def get_all_drafts(
+    search: str | None = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
     return DraftService.get_all_drafts(
         db,
         current_user.id,
+        search,
     )
 
 
@@ -199,6 +201,22 @@ def change_tone(
         draft_id,
         current_user.id,
         request.tone,
+    )
+
+
+@router.post(
+    "/{draft_id}/reuse",
+    response_model=DraftResponse,
+)
+def reuse_draft(
+    draft_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return DraftService.reuse_draft(
+        db,
+        draft_id,
+        current_user.id,
     )
 
 

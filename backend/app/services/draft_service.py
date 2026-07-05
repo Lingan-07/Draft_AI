@@ -45,10 +45,12 @@ class DraftService:
     def get_all_drafts(
         db: Session,
         user_id: int,
+        search: str | None = None,
     ):
         return DraftRepository.get_all_by_user(
             db,
             user_id,
+            search,
         )
 
     @staticmethod
@@ -384,4 +386,32 @@ class DraftService:
         return DraftVersionRepository.get_by_draft(
             db,
             draft.id,
+        )
+    
+    @staticmethod
+    def reuse_draft(
+        db: Session,
+        draft_id: int,
+        user_id: int,
+    ):
+        draft = DraftService.get_draft(
+            db,
+            draft_id,
+            user_id,
+        )
+
+        new_draft = Draft(
+            user_id=user_id,
+            title=f"{draft.title} (Copy)",
+            message_type=draft.message_type,
+            tone=draft.tone,
+            rough_points=draft.rough_points,
+            subject=draft.subject,
+            body=draft.body,
+            status=draft.status,
+        )
+
+        return DraftRepository.create(
+            db,
+            new_draft,
         )

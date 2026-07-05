@@ -5,8 +5,13 @@ export const createDraft = async (data) => {
   return response.data;
 };
 
-export const getAllDrafts = async () => {
-  const response = await api.get("/drafts");
+export const getAllDrafts = async (search = "") => {
+  const response = await api.get("/drafts", {
+    params: {
+      search,
+    },
+  });
+
   return response.data;
 };
 
@@ -60,5 +65,10 @@ export const changeTone = async (id, tone) => {
 
 export const getDraftVersions = async (id) => {
   const response = await api.get(`/drafts/${id}/versions`);
+  return response.data;
+};
+
+export const reuseDraft = async (id) => {
+  const response = await api.post(`/drafts/${id}/reuse`);
   return response.data;
 };

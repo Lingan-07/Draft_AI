@@ -2,6 +2,7 @@ import { Box, Link, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import styles from "./Styles";
 
 import AppTextField from "../../../components/AppTextField";
 import PrimaryButton from "../../../components/PrimaryButton";
@@ -35,7 +36,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <Box>
+    <Box sx={styles.box}>
       <Typography
         variant="h4"
         fontWeight="bold"

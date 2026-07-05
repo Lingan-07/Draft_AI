@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  TextField,
+} from "@mui/material";
 import toast from "react-hot-toast";
 
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
@@ -11,8 +16,8 @@ import StatCard from "./components/StatCard";
 import RecentDraftTable from "./components/RecentDraftTable";
 import Loader from "../../components/Loader";
 import styles from "./components/Styles";
-import { getAllDrafts } from "../../api/draftApi";
 
+import { getAllDrafts } from "../../api/draftApi";
 import { getUserDashboard } from "../../api/dashboardApi";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -22,25 +27,43 @@ const UserDashboard = () => {
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [drafts, setDrafts] = useState([]);
+  const [search, setSearch] = useState("");
 
- useEffect(() => {
-  const loadDashboard = async () => {
+  const loadDrafts = async (searchText = "") => {
     try {
-      const dashboardData = await getUserDashboard();
-      setDashboard(dashboardData);
-
-      const draftData = await getAllDrafts();
+      const draftData = await getAllDrafts(searchText);
       setDrafts(draftData);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to load dashboard.");
-    } finally {
-      setLoading(false);
+      toast.error("Failed to load drafts.");
     }
   };
 
-  loadDashboard();
-}, []);
+  useEffect(() => {
+    const loadDashboard = async () => {
+      try {
+        const dashboardData = await getUserDashboard();
+        setDashboard(dashboardData);
+
+        await loadDrafts();
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to load dashboard.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDashboard();
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      loadDrafts(search);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [search]);
 
   if (loading) {
     return <Loader />;
@@ -48,7 +71,6 @@ const UserDashboard = () => {
 
   return (
     <Box>
-
       <Box mb={6}>
         <Typography
           variant="h3"
@@ -106,7 +128,17 @@ const UserDashboard = () => {
         </Grid>
       </Box>
 
-     <RecentDraftTable drafts={drafts} />
+      <Box mb={3}>
+        <TextField
+          size="small"
+          placeholder="Search by title, subject or content..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          sx={styles.textfield}
+        />
+      </Box>
+
+      <RecentDraftTable drafts={drafts} />
     </Box>
   );
 };

@@ -8,12 +8,32 @@ import {
   TableHead,
   TableRow,
   Box,
+  Button,
 } from "@mui/material";
 
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 import EmptyState from "../../../components/EmptyState";
+import { reuseDraft } from "../../../api/draftApi";
 import styles from "./Styles";
 
 const RecentDraftTable = ({ drafts = [] }) => {
+  const navigate = useNavigate();
+
+  const handleReuse = async (id) => {
+    try {
+      const newDraft = await reuseDraft(id);
+
+      toast.success("Draft reused successfully!");
+
+      navigate(`/drafts/${newDraft.id}`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to reuse draft.");
+    }
+  };
+
   return (
     <Box sx={styles.recent_draft_box}>
       <Card
@@ -26,7 +46,7 @@ const RecentDraftTable = ({ drafts = [] }) => {
             fontWeight={700}
             mb={4}
           >
-            Recent Drafts
+            My Drafts
           </Typography>
 
           {drafts.length === 0 ? (
@@ -50,11 +70,15 @@ const RecentDraftTable = ({ drafts = [] }) => {
                   <TableCell sx={styles.recent_draft_cell}>
                     Date
                   </TableCell>
+
+                  <TableCell sx={styles.recent_draft_cell}>
+                    Action
+                  </TableCell>
                 </TableRow>
               </TableHead>
 
               <TableBody>
-                {drafts.slice(0, 5).map((draft) => (
+                {drafts.map((draft) => (
                   <TableRow key={draft.id}>
                     <TableCell>{draft.title}</TableCell>
 
@@ -68,6 +92,18 @@ const RecentDraftTable = ({ drafts = [] }) => {
                       {new Date(
                         draft.created_at
                       ).toLocaleDateString()}
+                    </TableCell>
+
+                    <TableCell>
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        onClick={() =>
+                          handleReuse(draft.id)
+                        }
+                      >
+                        Reuse
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
