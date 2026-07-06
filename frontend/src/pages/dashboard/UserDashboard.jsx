@@ -131,7 +131,7 @@ const UserDashboard = () => {
       <Box mb={3}>
         <TextField
           size="small"
-          placeholder="Search by title, subject or content..."
+          placeholder="Search by title, type or tone..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           sx={styles.textfield}

@@ -42,8 +42,8 @@ class DraftRepository:
             query = query.filter(
                 or_(
                     Draft.title.ilike(f"%{search}%"),
-                    Draft.subject.ilike(f"%{search}%"),
-                    Draft.body.ilike(f"%{search}%"),
+                    Draft.tone.ilike(f"%{search}%"),
+                    Draft.message_type.ilike(f"%{search}%"),
                 )
             )
 
